@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "391531018552",
+    "project_id": "farmkart-f0f6b",
+    "storage_bucket": "farmkart-f0f6b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:391531018552:android:1baa3c65e1b9ed87e7e9cd",
+        "android_client_info": {
+          "package_name": "com.example.farm_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "391531018552-h66dfdn0uikce2d656g0jusk0li12tp3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAySC0rtbRcpWRjutUl_6Bo90pbwb5LEZw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "391531018552-h66dfdn0uikce2d656g0jusk0li12tp3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
