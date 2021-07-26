@@ -5,16 +5,6 @@ description: A new Flutter project.
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 version: 1.0.0+1
 
 environment:
@@ -28,20 +18,51 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  google_fonts: ^2.1.0
-  firebase_auth: ^2.0.0
-  firebase_core: ^1.3.0
-  cloud_firestore: ^2.3.0
-  google_maps_flutter: ^2.0.6
+#  google_fonts: ^2.1.0
+#
+  google_maps_flutter: ^1.0.2
+#  geoflutterfire: ^2.0.3
+#  location: ^3.0.0
+  google_maps_place_picker: ^1.0.0
+  firebase_core: ^0.5.0
+  google_fonts: ^1.1.1
+  cloud_firestore: ^0.14.1+2
+  animated_splash: ^1.0.0
+  firebase_auth: ^0.18.1+2
+  firebase_storage: ^5.0.1
+  uuid: ^2.2.2
+  firebase_database: ^4.2.0
+  toast: ^0.1.5
+  badges: ^1.1.3
+  flutter_form_builder: ^3.14.1
+  image_picker: ^0.6.7+12
+  carousel_pro: ^1.0.0
+  font_awesome_flutter: ^8.10.0
+  flutter_search_bar: ^2.1.0
+  custom_radio_grouped_button: ^1.0.6+1
+  flutter_uploader: ^1.2.0
+  country_code_picker: ^2.0.2
+  bottom_navy_bar: ^6.0.0
+  flutter_staggered_grid_view: ^0.4.0
+  transparent_image: ^2.0.0
+  animated_text_kit: ^2.3.0
+  google_sign_in: ^4.5.5
+  firebase_analytics: ^6.0.2
+  path_provider: ^1.6.24
+  path: ^1.8.0
+  provider: ^4.0.1
+  firebase_messaging: ^7.0.3
+  flutter_local_notifications: ^3.0.1+7
+  connectivity: ^3.0.6
+  flutter_secure_storage: ^4.2.0
+  get: ^4.2.4
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
 
-# The following section is specific to Flutter.
 flutter:
 
   # The following line ensures that the Material Icons font is

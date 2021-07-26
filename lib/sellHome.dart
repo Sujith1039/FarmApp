@@ -1,52 +1,59 @@
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:farm_app/addProduct.dart';
+import 'package:farm_app/farmersProfile.dart';
+import 'package:farm_app/getSponsor.dart';
 import 'package:flutter/material.dart';
-import 'GMap.dart';
-import 'farmersprofile.dart';
 
 class SellHome extends StatefulWidget {
-  const SellHome({Key key}) : super(key: key);
-
   @override
   _SellHomeState createState() => _SellHomeState();
 }
 
 class _SellHomeState extends State<SellHome> {
+  int _currentIndex = 0;
+  int _counter = 0;
+  List pages = [
+    GetSponsor(),
+    GetSponsor(),
+    FarmersProfile(),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-            title: Text("Sell Page"),
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(20),
-            ))),
-        body: Column(
-          children: [
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: 300,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                  ),
-                  child: MapSample(),
-                ),
-              ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Flutter Demo"),
+        backgroundColor: Colors.red,
+      ),
+      body: pages[_currentIndex],
+      bottomNavigationBar: BottomNavyBar(
+        selectedIndex: _currentIndex,
+        showElevation: true,
+        itemCornerRadius: 24,
+        curve: Curves.easeIn,
+        onItemSelected: (index) => setState(() => _currentIndex = index),
+        items: <BottomNavyBarItem>[
+          BottomNavyBarItem(
+            icon: Icon(Icons.add),
+            title: Text('ADD'),
+            activeColor: Colors.red,
+            textAlign: TextAlign.center,
+          ),
+          BottomNavyBarItem(
+            icon: Icon(Icons.attach_money_outlined),
+            title: Text('Sponsor'),
+            activeColor: Colors.red,
+            textAlign: TextAlign.center,
+          ),
+          BottomNavyBarItem(
+            icon: Icon(Icons.account_circle_rounded),
+            title: Text(
+              'Messages test for mes teset test test ',
             ),
-            SizedBox(height: 10.0),
-            Text(
-              FarmersProfile.name,
-              style: TextStyle(fontSize: 20),
-            ),
-            SizedBox(height: 10.0),
-            Text(FarmersProfile.phNo, style: TextStyle(fontSize: 20)),
-            SizedBox(height: 10.0),
-            Text(FarmersProfile.landType, style: TextStyle(fontSize: 20)),
-          ],
-        ),
+            activeColor: Colors.red,
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }

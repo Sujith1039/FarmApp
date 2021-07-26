@@ -1,6 +1,10 @@
 import 'package:farm_app/GMap.dart';
+import 'package:farm_app/aa.dart';
+import 'package:farm_app/addProduct.dart';
+import 'package:farm_app/farmersProfile.dart';
 import 'package:farm_app/sellHome.dart';
 import 'package:farm_app/sign_in_up.dart';
+import 'package:farm_app/try.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'selection.dart';
@@ -19,13 +23,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/login',
+      initialRoute: '/sellRegister',
       routes: {
+        '/adds': (context) => Adds(),
+        'aa': (context) => Home(),
         '/selection': (context) => SelectionType(),
         '/login': (context) => LoginDemo(),
         '/sell': (context) => SellHome(),
-        '/map': (context) => MapSample(),
+        '/farmersProfile': (context) => FarmersProfile(),
+        '/map': (context) => GMap(),
         '/sellRegister': (context) => SellRegister(),
+        '/try': (context) => ProfileScreen(),
       },
     );
   }

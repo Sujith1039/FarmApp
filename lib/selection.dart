@@ -47,7 +47,7 @@ class _SelectionTypeState extends State<SelectionType> {
                             fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                       onPressed: () {
-                        Navigator.pushNamed(context, '/map');
+                        // Navigator.pushNamed(context, '/map');
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30)),

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 
-class FarmersProfile {
+class FarmersData {
   static String name;
   static String phNo;
-  static double lat;
-  static double long;
+  static double age;
+  static double experience;
+  static double acre;
+  static String Bio;
   static String landType;
+  static Path profilePic;
 
   // FarmersProfile(
   //     {@required this.landType,
