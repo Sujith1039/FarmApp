@@ -1,8 +1,7 @@
 name: farm_app
 description: A new Flutter project.
 
-# The following line prevents the package from being accidentally published to
-# pub.dev using `pub publish`. This is preferred for private packages.
+
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
@@ -15,15 +14,18 @@ dependencies:
     sdk: flutter
 
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+
   cupertino_icons: ^1.0.2
 #  google_fonts: ^2.1.0
 #
   google_maps_flutter: ^1.0.2
 #  geoflutterfire: ^2.0.3
-#  location: ^3.0.0
+  location: ^3.0.0
   google_maps_place_picker: ^1.0.0
+  geolocator: ^6.0.0
+#  intl: ^0.15.8
+#  google_maps_flutter: ^0.5.30
+#  google_map_location_picker: ^2.0.0
   firebase_core: ^0.5.0
   google_fonts: ^1.1.1
   cloud_firestore: ^0.14.1+2

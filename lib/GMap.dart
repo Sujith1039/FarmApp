@@ -1,140 +1,107 @@
+import 'dart:math';
+import 'package:geolocator/geolocator.dart';
+import 'package:farm_app/farmersData.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-// Your api key storage.
-import 'keys.dart';
-
 class GMap extends StatelessWidget {
-  // Light Theme
-  final ThemeData lightTheme = ThemeData.light().copyWith(
-    // Background color of the FloatingCard
-    cardColor: Colors.white,
-    buttonTheme: ButtonThemeData(
-      // Select here's button color
-      buttonColor: Colors.black,
-      textTheme: ButtonTextTheme.primary,
-    ),
-  );
-
-  // Dark Theme
-  final ThemeData darkTheme = ThemeData.dark().copyWith(
-    // Background color of the FloatingCard
-    cardColor: Colors.grey,
-    buttonTheme: ButtonThemeData(
-      // Select here's button color
-      buttonColor: Colors.yellow,
-      textTheme: ButtonTextTheme.primary,
-    ),
-  );
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Google Map Place Picker Demo',
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: ThemeMode.light,
-      home: HomePage(),
-      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key key}) : super(key: key);
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
 
-  static final kInitialPosition = LatLng(-33.8567844, 151.213108);
+  final String title;
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  PickResult selectedPlace;
+class _MyHomePageState extends State<MyHomePage> {
+  GoogleMapController _controller;
+
+  final CameraPosition _initialPosition =
+      CameraPosition(target: LatLng(24.903623, 67.198367));
+
+  var marker = <Marker>{};
+
+  addMarker(cordinate) {
+    int id = Random().nextInt(100);
+
+    setState(() {
+      marker
+          .add(Marker(position: cordinate, markerId: MarkerId(id.toString())));
+    });
+  }
+
+  Future<Position> _determinePosition() async {
+    await Geolocator.openAppSettings();
+    await Geolocator.openLocationSettings();
+
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    return await Geolocator.getCurrentPosition();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Google Map Place Picer Demo"),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              RaisedButton(
-                child: Text("Load Google Map"),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return PlacePicker(
-                          apiKey: APIKeys.apiKey,
-                          initialPosition: HomePage.kInitialPosition,
-                          useCurrentLocation: true,
-                          selectInitialPosition: true,
-
-                          //usePlaceDetailSearch: true,
-                          onPlacePicked: (result) {
-                            selectedPlace = result;
-                            Navigator.of(context).pop();
-                            setState(() {});
-                          },
-                          forceSearchOnZoomChanged: true,
-                          automaticallyImplyAppBarLeading: false,
-                          autocompleteLanguage: "ko",
-                          region: 'au',
-                          // selectInitialPosition: true,
-                          selectedPlaceWidgetBuilder:
-                              (_, selectedPlace, state, isSearchBarFocused) {
-                            print(
-                                "state: $state, isSearchBarFocused: $isSearchBarFocused");
-                            return isSearchBarFocused
-                                ? Container()
-                                : FloatingCard(
-                                    bottomPosition:
-                                        0.0, // MediaQuery.of(context) will cause rebuild. See MediaQuery document for the information.
-                                    leftPosition: 0.0,
-                                    rightPosition: 0.0,
-                                    width: 500,
-                                    borderRadius: BorderRadius.circular(12.0),
-                                    child: state == SearchingState.Searching
-                                        ? Center(
-                                            child: CircularProgressIndicator())
-                                        : RaisedButton(
-                                            child: Text("Pick Here"),
-                                            onPressed: () {
-                                              // IMPORTANT: You MUST manage selectedPlace data yourself as using this build will not invoke onPlacePicker as
-                                              //            this will override default 'Select here' Button.
-                                              print(
-                                                  "do something with [selectedPlace] data");
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                  );
-                          },
-                          pinBuilder: (context, state) {
-                            if (state == PinState.Idle) {
-                              return Icon(Icons.favorite_border);
-                            } else {
-                              return Icon(Icons.favorite);
-                            }
-                          },
-                        );
-                      },
-                    ),
-                  );
-                },
-              ),
-              selectedPlace == null
-                  ? Container()
-                  : Text(selectedPlace.formattedAddress ?? ""),
-            ],
-          ),
-        ));
+      body: GoogleMap(
+        myLocationEnabled: true,
+        myLocationButtonEnabled: true,
+        initialCameraPosition: _initialPosition,
+        mapType: MapType.hybrid,
+        onMapCreated: (controller) {
+          setState(() {
+            _controller = controller;
+          });
+        },
+        markers: marker,
+        onTap: (cordinate) {
+          marker.clear();
+          _controller.animateCamera(CameraUpdate.newLatLng(cordinate));
+          addMarker(cordinate);
+          FarmersData.latLong = cordinate;
+          print(cordinate);
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          Position _position = await _determinePosition();
+          final CameraPosition currentPosition = CameraPosition(
+              target: LatLng(_position.latitude, _position.longitude));
+          print(_position.latitude);
+          print(_position.longitude);
+        },
+        child: Icon(Icons.zoom_out),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
   }
 }
